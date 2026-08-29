@@ -1,3 +1,16 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: linear-gradient(to bottom, #f8fafc, #ffffff);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
+    'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 .app-shell {
   max-width: 1100px;
   margin: 0 auto;
@@ -24,22 +37,25 @@
 .hero-panel h1 {
   margin: 0 0 12px;
   font-size: clamp(2.5rem, 4vw, 4.2rem);
+  color: #0f172a;
 }
 
 .subtitle {
   max-width: 680px;
   color: #475569;
   font-size: 1.05rem;
+  line-height: 1.6;
 }
 
 .status-card,
 .summary-card,
 .panel,
-.indicator-card {
-  background: rgba(255, 255, 255, 0.82);
-  border: 1px solid rgba(148, 163, 184, 0.2);
-  box-shadow: 0 24px 48px rgba(15, 23, 42, 0.05);
-  border-radius: 18px;
+.indicator-card,
+.promise-card {
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  box-shadow: 0 20px 40px rgba(15, 23, 42, 0.08);
+  border-radius: 16px;
 }
 
 .status-card {
@@ -54,6 +70,7 @@
   letter-spacing: 0.08em;
   font-size: 0.7rem;
   color: #64748b;
+  font-weight: 600;
 }
 
 .status-card strong {
@@ -64,6 +81,49 @@
 .status-card p {
   margin: 0;
   color: #475569;
+  font-size: 0.95rem;
+}
+
+/* Election Selector */
+.election-selector {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 28px;
+  padding: 16px 20px;
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(79, 70, 229, 0.2);
+  border-radius: 12px;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.election-selector label {
+  color: #334155;
+  white-space: nowrap;
+}
+
+.election-select {
+  padding: 8px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  background: white;
+  cursor: pointer;
+  color: #0f172a;
+  transition: all 0.2s ease;
+  min-width: 200px;
+}
+
+.election-select:hover {
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+.election-select:focus {
+  outline: none;
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
 }
 
 .summary-grid,
@@ -88,19 +148,25 @@
   letter-spacing: 0.08em;
   color: #64748b;
   margin-bottom: 12px;
+  font-weight: 600;
 }
 
 .summary-card h2 {
   margin: 0 0 8px;
   font-size: 1.4rem;
+  color: #0f172a;
 }
 
 .summary-card p {
+  margin: 0;
   color: #475569;
+  font-size: 0.95rem;
+  line-height: 1.5;
 }
 
 .summary-card.accent {
-  background: linear-gradient(135deg, #eef2ff, #ffffff);
+  background: linear-gradient(135deg, #eef2ff 0%, #faf5ff 100%);
+  border-color: rgba(79, 70, 229, 0.3);
 }
 
 .content-grid {
@@ -108,7 +174,7 @@
 }
 
 .panel {
-  padding: 20px;
+  padding: 24px;
 }
 
 .panel-header {
@@ -116,23 +182,28 @@
   align-items: end;
   justify-content: space-between;
   gap: 12px;
-  margin-bottom: 16px;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #e2e8f0;
 }
 
 .panel-header h3 {
   margin: 0;
-  font-size: 1.2rem;
+  font-size: 1.3rem;
+  color: #0f172a;
+  font-weight: 600;
 }
 
 .panel-header span {
   color: #64748b;
-  font-size: 0.75rem;
+  font-size: 0.8rem;
 }
 
 .party-list {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
+  margin-bottom: 24px;
 }
 
 .party-row {
@@ -143,46 +214,311 @@
   background: #f8fafc;
   border-radius: 12px;
   border: 1px solid #e2e8f0;
-  padding: 12px 14px;
+  padding: 14px 16px;
+  transition: all 0.2s ease;
 }
 
-.party-row strong,
-.party-row small,
-.party-meta span,
-.party-meta em {
-  display: block;
+.party-row:hover {
+  background: #f0f6ff;
+  border-color: #cbd5e1;
+}
+
+.party-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.party-row strong {
+  color: #0f172a;
+  font-size: 0.95rem;
 }
 
 .party-row small {
   color: #64748b;
-  margin-top: 4px;
+  font-size: 0.8rem;
 }
 
 .party-meta {
-  text-align: right;
+  display: flex;
+  gap: 12px;
+  align-items: center;
 }
 
 .party-meta span {
   color: #475569;
+  font-size: 0.9rem;
 }
 
 .party-meta em {
-  margin-top: 6px;
   font-style: normal;
-  font-size: 0.72rem;
-  padding: 4px 8px;
-  border-radius: 999px;
-  display: inline-block;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-weight: 600;
+  white-space: nowrap;
 }
 
-.in-government {
+.party-meta .in-government {
   background: #dcfce7;
   color: #166534;
 }
 
-.opposition {
+.party-meta .opposition {
   background: #fee2e2;
   color: #991b1b;
+}
+
+.promise-section {
+  margin-top: 24px;
+}
+
+.promise-group {
+  margin-bottom: 20px;
+}
+
+.promise-group h4 {
+  margin: 0 0 12px;
+  font-size: 1rem;
+  color: #0f172a;
+  font-weight: 600;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #4f46e5;
+}
+
+.promise-card {
+  margin-bottom: 12px;
+  padding: 16px;
+}
+
+.promise-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.promise-header strong {
+  margin: 0;
+  color: #0f172a;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  flex: 1;
+}
+
+.completion-badge {
+  display: inline-block;
+  background: #4f46e5;
+  color: white;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.promise-card p {
+  margin: 0 0 12px;
+  color: #475569;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.promise-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.8rem;
+}
+
+.promise-footer em {
+  font-style: normal;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+.status-pending {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.status-in_progress {
+  background: #bfdbfe;
+  color: #1e40af;
+}
+
+.status-completed {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.status-blocked {
+  background: #fed7aa;
+  color: #9a3412;
+}
+
+.sources {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.source-link {
+  display: inline-block;
+  color: #4f46e5;
+  text-decoration: none;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border: 1px solid #e0e7ff;
+  padding: 3px 8px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.source-link:hover {
+  background: #eef2ff;
+  border-color: #4f46e5;
+  text-decoration: underline;
+}
+
+.no-promises {
+  color: #94a3b8;
+  font-size: 0.9rem;
+  font-style: italic;
+  margin: 8px 0 0;
+}
+
+.indicator-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+.indicator-card {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.indicator-card span {
+  color: #64748b;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+}
+
+.indicator-card strong {
+  font-size: 1.6rem;
+  color: #0f172a;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .app-shell {
+    padding: 32px 16px 48px;
+  }
+
+  .hero-panel {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    align-items: stretch;
+  }
+
+  .hero-panel h1 {
+    font-size: 2rem;
+  }
+
+  .election-selector {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .election-select {
+    min-width: 100%;
+  }
+
+  .summary-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .content-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .party-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .party-meta {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .promise-header {
+    flex-direction: column;
+  }
+
+  .promise-footer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+.promise-section {
+  margin-top: 24px;
+  display: grid;
+  gap: 18px;
+}
+
+.promise-group h4 {
+  margin: 0 0 12px;
+  color: #0f172a;
+}
+
+.promise-card {
+  padding: 16px;
+  margin-bottom: 10px;
+}
+
+.promise-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.promise-header span {
+  font-size: 0.8rem;
+  color: #475569;
+  font-weight: 700;
+}
+
+.promise-card p {
+  margin: 0 0 10px;
+  color: #475569;
+}
+
+.promise-status em {
+  display: inline-flex;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: #e0f2fe;
+  color: #075985;
+  font-style: normal;
+  font-size: 0.72rem;
+  text-transform: capitalize;
 }
 
 .indicator-grid {

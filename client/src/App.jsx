@@ -1,30 +1,29 @@
 import { useEffect, useState } from 'react'
 import './App.css'
 
-const partyData = [
-  { name: 'Kokoomus', seats: 48, share: 20.8, government: true },
-  { name: 'SDP', seats: 42, share: 19.9, government: true },
-  { name: 'Perussuomalaiset', seats: 46, share: 20.1, government: false },
-  { name: 'Vihreät', seats: 13, share: 7.3, government: true },
-  { name: 'RKP', seats: 9, share: 4.3, government: true },
-]
-
-const indicators = [
-  { label: 'Employment rate', value: '73.4%' },
-  { label: 'GDP growth', value: '1.9%' },
-  { label: 'Consumer confidence', value: '99.7' },
-  { label: 'Inflation', value: '1.7%' },
-]
-
 function App() {
+  const [elections, setElections] = useState([])
+  const [selectedElectionId, setSelectedElectionId] = useState(null)
   const [backendStatus, setBackendStatus] = useState(null)
 
   useEffect(() => {
-    fetch('/api/overview')
+    fetch('/api/elections')
       .then((response) => response.json())
-      .then((data) => setBackendStatus(data))
-      .catch(() => setBackendStatus({ app: 'Offline', description: 'Backend not running' }))
+      .then((data) => {
+        setElections(data)
+        if (data.length > 0) {
+          setSelectedElectionId(data[0].id)
+        }
+        setBackendStatus({ app: 'Vaalilupaukset', description: 'Connected to API' })
+      })
+      .catch(() => {
+        setBackendStatus({ app: 'Offline', description: 'Backend not running' })
+      })
   }, [])
+
+  const election = elections.find((e) => e.id === selectedElectionId) || elections[0]
+  const parties = election?.parties || []
+  const indicators = election?.economicIndicators || []
 
   return (
     <main className="app-shell">
@@ -45,16 +44,34 @@ function App() {
         </div>
       </header>
 
+      {elections.length > 0 && (
+        <div className="election-selector">
+          <label htmlFor="election-select">Select election year:</label>
+          <select
+            id="election-select"
+            value={selectedElectionId || ''}
+            onChange={(e) => setSelectedElectionId(Number(e.target.value))}
+            className="election-select"
+          >
+            {elections.map((e) => (
+              <option key={e.id} value={e.id}>
+                {e.year} — {e.name}
+              </option>
+            ))}
+          </select>
+        </div>
+      )}
+
       <section className="summary-grid">
         <div className="summary-card accent">
           <span>Election focus</span>
-          <h2>Parliamentary elections</h2>
-          <p>Party and candidate tracking for each election cycle.</p>
+          <h2>{election ? election.name : 'Loading election...'}</h2>
+          <p>{election ? election.summary : 'Fetching election data...'}</p>
         </div>
         <div className="summary-card">
           <span>Tracking layers</span>
-          <h2>Parties + Candidates</h2>
-          <p>Goal: measure promises against actual political action.</p>
+          <h2>Parties + promises</h2>
+          <p>Goal: measure policy delivery against campaign commitments.</p>
         </div>
         <div className="summary-card">
           <span>Data sources</span>
@@ -67,22 +84,55 @@ function App() {
         <div className="panel">
           <div className="panel-header">
             <h3>Party overview</h3>
-            <span>2023 general election snapshot</span>
+            <span>{election ? `${election.year} election snapshot` : 'Loading...'}</span>
           </div>
 
           <div className="party-list">
-            {partyData.map((party) => (
-              <div key={party.name} className="party-row">
-                <div>
+            {parties.map((party) => (
+              <div key={party.id} className="party-row">
+                <div className="party-info">
                   <strong>{party.name}</strong>
-                  <small>{party.seats} seats</small>
+                  <small>{party.seats || '—'} seats</small>
                 </div>
                 <div className="party-meta">
-                  <span>{party.share}% vote share</span>
-                  <em className={party.government ? 'in-government' : 'opposition'}>
-                    {party.government ? 'Government' : 'Opposition'}
+                  <span>{party.voteShare || '—'}% vote share</span>
+                  <em className={party.inGovernment ? 'in-government' : 'opposition'}>
+                    {party.inGovernment ? 'Government' : 'Opposition'}
                   </em>
                 </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="promise-section">
+            {parties.map((party) => (
+              <div key={`${party.id}-promises`} className="promise-group">
+                <h4>{party.name}</h4>
+                {party.promises && party.promises.length > 0 ? (
+                  party.promises.map((promise) => (
+                    <div key={promise.id} className="promise-card">
+                      <div className="promise-header">
+                        <strong>{promise.title}</strong>
+                        <span className="completion-badge">{promise.completionScore || 0}%</span>
+                      </div>
+                      <p>{promise.description}</p>
+                      <div className="promise-footer">
+                        <em className={`status-${promise.status}`}>{promise.status}</em>
+                        {promise.sources && promise.sources.length > 0 && (
+                          <div className="sources">
+                            {promise.sources.map((source, idx) => (
+                              <a key={idx} href={source.url} target="_blank" rel="noopener noreferrer" className="source-link">
+                                {source.name}
+                              </a>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                  <p className="no-promises">No promises recorded yet</p>
+                )}
               </div>
             ))}
           </div>
