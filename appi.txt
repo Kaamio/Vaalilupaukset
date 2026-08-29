@@ -1,16 +1,68 @@
 Webapp - Finnish election promises vs actual outcome
 
-General idea:
-An app that follows what promises election candidates make and how well those promises are fulfilled by the end (and during) their term. The app should also track general economic metrics such as employment rate, gdp, consumer trust index etc.
-The general idea in Finnish elections is that a candidate represents a party. The party makes campaign promises that the candidate gets behind, but the candidates also have their own campaign promises. In this project we should aim to track both of them.
-Parliamentary elections are the main elections in Finland and this app will focus solely on that (at least for now). These elections are held every 4 years.
+Project goal:
+Create a web app that tracks Finnish parliamentary election promises and compares them to what happens during the term in office. The app should help users understand whether parties and individual elected candidates fulfilled their promises, and how that relates to broader economic and social conditions.
 
-Requirements:
-For each election year, the app should include all relevant parties and their candidates that were elected (no need to include non-elected candidates).
-For each party, the general election results and wether they were included in the government or the opposition and the partys main topics during the election. There should also be some kind of map that you could use to see the share of votes by municipality.
-For each elected candidate of each party there should be his/her main campaign promises as well as all relevant legislation/discussion/initiations related to that promise during the 4-year period. This should be indicated by some sort of KPI that track wether this issue has been worked on 0-100%.
-For each election cycle, the main polititcal parties (govenrment) should be visible as well as the main economic/social indicators during that period. 
+Core concept:
+A candidate usually represents a political party. The party may have shared campaign themes and promises, while candidates also have their own personal promises. This project should track both party-level and candidate-level commitments.
 
-Sources to use (for example):
-https://www.fsd.tuni.fi/pohtiva/
-https://www.yle.fi
+Scope:
+- Focus on Finnish parliamentary elections.
+- Support multiple election cycles, beginning with the most recent parliamentary elections.
+- Show elected candidates, their party membership, and the promises they supported or made themselves.
+- Track 0-100 KPI progress of each promise across a four-year period.
+- Include economic and social indicators during each election period.
+
+Main features:
+1. Election overview
+   - list election years and general data
+   - show which parties won seats and whether they were in government or opposition
+   - display vote share and party priorities during the campaign
+
+2. Party page
+   - list all parties in a given election year
+   - show vote share, seats, government status, and main topics
+   - include a municipality-level vote map idea for future development
+
+3. Candidate page
+   - list elected candidates by party
+   - show each candidate's main campaign promises
+   - connect each promise to legislative actions, discussions, proposals, and policy developments during the term
+   - present a KPI score from 0 to 100 for the completion or progress of each promise
+
+4. Economic and social dashboard
+   - show unemployment rate, GDP growth, consumer confidence, inflation, and other relevant indicators
+   - compare the relevant election period to the party or government in power
+
+5. Future user contribution layer
+   - allow users to suggest a campaign promise they believe a candidate or party made
+   - include pending review state for moderation and verification
+   - store source links and notes together with every suggested promise
+
+Technology plan:
+- Frontend: React + Vite
+- Backend: Node.js + Express
+- Database: PostgreSQL (preferred via Supabase or similar managed Postgres)
+- Hosting: Vercel for frontend, Render or similar for backend, Supabase for database
+
+Data sources to use:
+- https://www.fsd.tuni.fi/pohtiva/
+- https://www.yle.fi
+- public election result data and official government/parliamentary records
+- policy documents, parliamentary proceedings, and initiative tracking sources
+
+Priority roadmap:
+1. Build core election, party, candidate, and promise models
+2. Add API endpoints for reading and listing data
+3. Create simple dashboard UI for party overview and candidate scorecards
+4. Add notes and source links to each promise
+5. Add moderation flow for user-submitted promises
+6. Add economic indicator comparisons and progress charts
+7. Extend with interactive maps and deeper policy tracking
+
+Acceptance criteria:
+- The app can display an election year and all main parties.
+- The app can show elected candidates and their corresponding promises.
+- Progress of each promise can be tracked as a KPI.
+- Users can submit potential campaign promises for review.
+- The platform stores source material and statuses for each promise.
