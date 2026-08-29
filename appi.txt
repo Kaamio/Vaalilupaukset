@@ -1,0 +1,16 @@
+Webapp - Finnish election promises vs actual outcome
+
+General idea:
+An app that follows what promises election candidates make and how well those promises are fulfilled by the end (and during) their term. The app should also track general economic metrics such as employment rate, gdp, consumer trust index etc.
+The general idea in Finnish elections is that a candidate represents a party. The party makes campaign promises that the candidate gets behind, but the candidates also have their own campaign promises. In this project we should aim to track both of them.
+Parliamentary elections are the main elections in Finland and this app will focus solely on that (at least for now). These elections are held every 4 years.
+
+Requirements:
+For each election year, the app should include all relevant parties and their candidates that were elected (no need to include non-elected candidates).
+For each party, the general election results and wether they were included in the government or the opposition and the partys main topics during the election. There should also be some kind of map that you could use to see the share of votes by municipality.
+For each elected candidate of each party there should be his/her main campaign promises as well as all relevant legislation/discussion/initiations related to that promise during the 4-year period. This should be indicated by some sort of KPI that track wether this issue has been worked on 0-100%.
+For each election cycle, the main polititcal parties (govenrment) should be visible as well as the main economic/social indicators during that period. 
+
+Sources to use (for example):
+https://www.fsd.tuni.fi/pohtiva/
+https://www.yle.fi

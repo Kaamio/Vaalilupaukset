@@ -1,0 +1,25 @@
+{
+  "name": "vaalilupaukset",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Finnish election promises tracker",
+  "scripts": {
+    "dev": "concurrently \"npm run dev --prefix server\" \"npm run dev --prefix client\"",
+    "dev:client": "npm run dev --prefix client",
+    "dev:server": "npm run dev --prefix server",
+    "build": "npm run build --prefix client",
+    "lint": "npm run lint --prefix client",
+    "start": "node server/index.js"
+  },
+  "keywords": [
+    "elections",
+    "finland",
+    "react",
+    "node"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "concurrently": "^10.0.5"
+  }
+}
